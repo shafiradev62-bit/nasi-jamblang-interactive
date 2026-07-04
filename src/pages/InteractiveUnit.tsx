@@ -57,7 +57,7 @@ export default function InteractiveUnit() {
   const questions = isId ? questionsId : questionsEn;
   const introText = isId ? introTextId : introTextEn;
 
-  const currentQuestion = questions[page - 1];
+  const currentQuestion = questions[page - 1] as any;
 
   const getWordCount = (text: string) => {
     if (!text) return 0;

@@ -412,7 +412,7 @@ const Unit10Pisa = ({ onExit, studentId }: Unit10PisaProps) => {
           </g>
 
           {/* Connect 3-4 (Waste) */}
-          <path d="M230,55 Q245,55 245,70" fill="none" stroke="#cbd5e1" strokeWidth="2.5" strokeDasharray={treatment === "None" ? "4,2" : "0"} stroke={treatment === "None" ? "#ef4444" : "#22c55e"} />
+          <path d="M230,55 Q245,55 245,70" fill="none" strokeWidth="2.5" strokeDasharray={treatment === "None" ? "4,2" : "0"} stroke={treatment === "None" ? "#ef4444" : "#22c55e"} />
 
           {/* 4. Treatment Tank */}
           <g transform="translate(250, 45)" filter="url(#sim-glow)">

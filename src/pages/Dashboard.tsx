@@ -101,7 +101,7 @@ const Dashboard = () => {
           if (sessionsData) {
             const completed = sessionsData.filter(s => s.completed);
             const totalScore = completed.reduce((sum, s) => sum + (s.score || 0), 0);
-            const totalTime = completed.reduce((sum, s) => sum + (s.time_spent_seconds || 0), 0);
+            const totalTime = completed.reduce((sum, s) => sum + ((s as any).time_spent_seconds || 0), 0);
             const totalAttempts = completed.reduce((sum, s) => {
               const attempts = s.question_attempts as Record<string, number> || {};
               return sum + Object.values(attempts).reduce((a, b) => a + b, 0);
@@ -117,7 +117,7 @@ const Dashboard = () => {
               }
               unitStats[s.unit].count++;
               unitStats[s.unit].avgScore += s.score || 0;
-              unitStats[s.unit].avgTime += s.time_spent_seconds || 0;
+              unitStats[s.unit].avgTime += (s as any).time_spent_seconds || 0;
             });
 
             Object.keys(unitStats).forEach(unit => {
@@ -198,8 +198,8 @@ const Dashboard = () => {
       s.total ? Math.round(((s.score ?? 0) / s.total) * 100) + "%" : "0%",
       new Date(s.started_at).toLocaleString("id-ID"),
       new Date(s.updated_at).toLocaleString("id-ID"),
-      s.time_spent_seconds ?? 0,
-      Object.values((s as any).question_attempts || {}).reduce((a: number, b: number) => a + b, 0),
+      (s as any).time_spent_seconds ?? 0,
+      Object.values((s as any).question_attempts || {}).reduce((a: number, b) => a + Number(b), 0),
     ]);
     const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
@@ -570,9 +570,9 @@ const Dashboard = () => {
                         <span className="text-[10px] text-muted-foreground">ID: {s.device_id.slice(0, 8)}...</span>
                         {s.student_email && <span className="text-[10px] text-muted-foreground">{s.student_email}</span>}
                         {s.student_contact && <span className="text-[10px] text-muted-foreground">{s.student_contact}</span>}
-                        {s.time_spent_seconds && (
+                        {(s as any).time_spent_seconds && (
                           <span className="text-[10px] text-muted-foreground">
-                            {Math.floor((s.time_spent_seconds) / 60)}m {Math.floor((s.time_spent_seconds) % 60)}s
+                            {Math.floor(((s as any).time_spent_seconds) / 60)}m {Math.floor(((s as any).time_spent_seconds) % 60)}s
                           </span>
                         )}
                       </div>
@@ -594,7 +594,7 @@ const Dashboard = () => {
                         </div>
                         {((s as any).question_attempts) && (
                           <div className="text-[10px] text-muted-foreground mt-0.5">
-                            {Object.values((s as any).question_attempts).reduce((a: number, b: number) => a + b, 0)} attempts
+                            {Object.values((s as any).question_attempts).reduce((a: number, b) => a + Number(b), 0)} attempts
                           </div>
                         )}
                       </div>

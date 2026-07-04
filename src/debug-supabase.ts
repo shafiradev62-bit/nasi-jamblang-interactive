@@ -1,8 +1,8 @@
 // Supabase Integration Debug Script
 // Run this in browser console or add to your app temporarily
 
-import { supabase } from "./src/integrations/supabase/client";
-import { getDeviceId } from "./src/hooks/useExamSession";
+import { supabase } from "./integrations/supabase/client";
+import { getDeviceId } from "./hooks/useExamSession";
 
 console.log("🔍 ===== SUPABASE DEBUG =====\n");
 

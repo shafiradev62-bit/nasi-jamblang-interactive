@@ -203,6 +203,7 @@ const QuestionPanel = ({
         <div className="flex items-center gap-1 mb-2.5">
           {Array.from({ length: totalQuestions }, (_, i) => {
             const qId = i + 1;
+            const isItemFlagged = flaggedSet?.has(qId);
             const isAnswered = answeredCount > 0;
             const isCurrent = i === questionIndex;
             const isFuture = i > questionIndex;

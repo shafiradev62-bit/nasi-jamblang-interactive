@@ -72,7 +72,7 @@ async function syncSessionToSupabase(session: LocalSession) {
         updated_at: session.updated_at,
         time_spent_seconds: session.time_spent_seconds,
         question_attempts: session.question_attempts,
-      });
+      } as any);
 
     if (error) {
       console.error('Error syncing session to Supabase:', error);
