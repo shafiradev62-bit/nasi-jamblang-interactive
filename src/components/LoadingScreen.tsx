@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const SPRITES = Array.from({ length: 12 }, (_, i) => `/karakter/sprite_${i + 1}.png`);
+// Cinematic trailer images
+const TRAILERS = ["/images/trailer.jpg", "/images/trailer1.jpg", "/images/trailer2.jpg"];
 
 const BUBBLES_EN = [
   "Welcome! Let's explore traditional food science.",
@@ -39,16 +40,16 @@ export default function LoadingScreen({ onDone, duration = 30000 }: LoadingScree
   const isId = lang === "id";
   const bubbles = isId ? BUBBLES_ID : BUBBLES_EN;
 
-  const [spriteIdx, setSpriteIdx] = useState(0);
+  const [trailerIdx, setTrailerIdx] = useState(0);
   const [bubbleIdx, setBubbleIdx] = useState(() => Math.floor(Math.random() * bubbles.length));
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
 
-  // Cycle sprites every 120ms
+  // Cycle trailer slides every 2500ms
   useEffect(() => {
     const t = setInterval(() => {
-      setSpriteIdx((i) => (i + 1) % SPRITES.length);
-    }, 120);
+      setTrailerIdx((i) => (i + 1) % TRAILERS.length);
+    }, 2500);
     return () => clearInterval(t);
   }, []);
 
@@ -69,68 +70,39 @@ export default function LoadingScreen({ onDone, duration = 30000 }: LoadingScree
   }, [duration]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-sky-200 via-green-100 to-green-200 overflow-hidden">
-      {/* Animated Clouds */}
-      <div className="absolute top-10 left-10 w-32 h-16 bg-white rounded-full opacity-80 animate-float" style={{ animationDuration: "15s" }} />
-      <div className="absolute top-24 right-20 w-24 h-12 bg-white rounded-full opacity-70 animate-float" style={{ animationDuration: "20s", animationDelay: "-5s" }} />
-      <div className="absolute top-40 left-1/3 w-40 h-20 bg-white rounded-full opacity-90 animate-float" style={{ animationDuration: "18s", animationDelay: "-10s" }} />
-      
-      {/* Trees on bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-32">
-        <svg viewBox="0 0 400 100" className="w-full h-full" preserveAspectRatio="none">
-          <rect x="30" y="60" width="12" height="40" fill="#8B4513" />
-          <circle cx="36" cy="50" r="30" fill="#228B22" />
-          <circle cx="26" cy="55" r="20" fill="#32CD32" />
-          <circle cx="46" cy="55" r="20" fill="#32CD32" />
-          
-          <rect x="350" y="60" width="12" height="40" fill="#8B4513" />
-          <circle cx="356" cy="50" r="30" fill="#228B22" />
-          <circle cx="346" cy="55" r="20" fill="#32CD32" />
-          <circle cx="366" cy="55" r="20" fill="#32CD32" />
-        </svg>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black overflow-hidden">
+      {/* Cinematic Trailer Slideshow */}
+      <div className="absolute inset-0">
+        {TRAILERS.map((src, idx) => (
+          <img
+            key={idx}
+            src={src}
+            alt={`Trailer ${idx + 1}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+              idx === trailerIdx ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       </div>
-      
-      {/* Floating Particles */}
-      {[...Array(10)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute bg-yellow-300 rounded-full opacity-70 animate-pulse"
-          style={{
-            width: `${4 + Math.random() * 6}px`,
-            height: `${4 + Math.random() * 6}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDuration: `${2 + Math.random() * 3}s`,
-            animationDelay: `${Math.random() * 2}s`,
-          }}
-        />
-      ))}
 
       <div className="flex flex-col items-center gap-6 select-none relative z-10">
         {/* Speech bubble */}
-        <div className="relative bg-white border-2 border-green-400 rounded-2xl px-5 py-3 shadow-lg max-w-xs text-center">
-          <p className="text-[14px] text-foreground font-medium leading-snug">
+        <div className="relative bg-white/95 backdrop-blur-md border-2 border-green-400 rounded-2xl px-6 py-4 shadow-2xl max-w-sm text-center">
+          <p className="text-[15px] text-foreground font-medium leading-snug">
             {bubbles[bubbleIdx]}
           </p>
           {/* Bubble tail */}
-          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-5 h-5 bg-white border-r-2 border-b-2 border-green-400 rotate-45" />
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-6 h-6 bg-white/95 border-r-2 border-b-2 border-green-400 rotate-45" />
         </div>
 
-        {/* Sprite with animation */}
-        <img
-          src={SPRITES[spriteIdx]}
-          alt="character"
-          className="w-32 h-32 object-contain animate-bounce drop-shadow-lg"
-          draggable={false}
-          style={{ animationDuration: "1.5s" }}
-        />
-
         {/* Dots loader */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className="w-3 h-3 rounded-full bg-green-600 animate-bounce shadow-md"
+              className="w-4 h-4 rounded-full bg-white shadow-xl animate-bounce"
               style={{ animationDelay: `${i * 0.2}s` }}
             />
           ))}
@@ -139,27 +111,11 @@ export default function LoadingScreen({ onDone, duration = 30000 }: LoadingScree
         {/* Skip button */}
         <button
           onClick={onDone}
-          className="mt-2 px-4 py-2 bg-green-500 text-white text-sm font-semibold rounded-full hover:bg-green-600 transition-all shadow-md hover:shadow-lg active:scale-95"
+          className="mt-3 px-8 py-3 bg-green-600 text-white text-base font-semibold rounded-full hover:bg-green-700 transition-all shadow-2xl hover:shadow-emerald-900/20 active:scale-[0.97]"
         >
           {isId ? "Lewati" : "Skip"}
         </button>
       </div>
-
-      {/* Bottom grass strip */}
-      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-green-600 to-green-400" />
-      
-      {/* CSS Animations */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(30px); }
-        }
-        .animate-float {
-          animation-name: float;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-        }
-      `}</style>
     </div>
   );
 }
