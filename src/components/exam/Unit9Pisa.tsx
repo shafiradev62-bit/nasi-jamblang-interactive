@@ -455,7 +455,12 @@ const Unit9Pisa = ({ onExit, studentId }: Unit9PisaProps) => {
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                  {isId ? "Simulasi Produksi Batik" : "            {/* ── CONTROLS ── */}
+                  {isId ? "Simulasi Produksi Batik" : "Batik Production Simulation"}
+                </h3>
+              </div>
+            </div>
+
+            {/* ── CONTROLS ── */}
             <div className="bg-white p-5 rounded-2xl border border-border/50 shadow-sm space-y-4">
               <div className="space-y-4">
                 {/* Dye Type */}
