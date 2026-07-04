@@ -18,6 +18,7 @@ const Unit2Pisa = ({ onExit }: Unit2PisaProps) => {
   const { lang } = useLanguage();
   const isId = lang === "id";
   const [currentStep, setCurrentStep] = useState(0);
+  const [shakeJar, setShakeJar] = useState(false); // State for jar shake animation
 
   // Simulation variables
   const [salt, setSalt] = useState(50);        // Kadar Garam (%)
@@ -373,9 +374,16 @@ const Unit2Pisa = ({ onExit }: Unit2PisaProps) => {
 
             {/* ── JAR VISUALISATION ── */}
             <div className="bg-white rounded-2xl border border-border/50 shadow-sm p-5 transition-transform hover:scale-[1.02] cursor-pointer">
-              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-3 text-center">{isId ? "Visualisasi dalam Wadah" : "Inside the Jar"}</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-3 text-center">{isId ? "Visualisasi dalam Wadah (klik untuk getar!" : "Inside the Jar (click to shake!)"}</p>
               <div className="flex gap-5 items-center">
-                <svg viewBox="0 0 200 260" className="h-56 shrink-0" xmlns="http://www.w3.org/2000/svg">
+                <svg 
+                  viewBox="0 0 200 260" 
+                  className={`h-56 shrink-0 transition-transform ${shakeJar ? 'animate-shake' : ''}`}
+                  onClick={() => {
+                    setShakeJar(true);
+                    setTimeout(() => setShakeJar(false), 500);
+                  }}
+                  xmlns="http://www.w3.org/2000/svg">
                   <defs>
                   <linearGradient id="terasiPaste" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#6b3f29" />

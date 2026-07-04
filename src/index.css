@@ -85,7 +85,11 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    background: linear-gradient(135deg, hsl(152, 30%, 98%) 0%, hsl(152, 25%, 96%) 25%, hsl(152, 20%, 94%) 50%, hsl(152, 25%, 95%) 75%, hsl(152, 30%, 97%) 100%);
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(144, 238, 144, 0.1) 0%, transparent 40%),
+      linear-gradient(135deg, hsl(152, 30%, 98%) 0%, hsl(152, 25%, 96%) 25%, hsl(152, 20%, 94%) 50%, hsl(152, 25%, 95%) 75%, hsl(152, 30%, 97%) 100%);
     background-attachment: fixed;
   }
 
@@ -155,6 +159,18 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation-name: shake;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
 }
 
 /* Simulation slider custom style */
