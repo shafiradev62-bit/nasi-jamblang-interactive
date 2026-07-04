@@ -594,7 +594,7 @@ const Dashboard = () => {
                         </div>
                         {((s as any).question_attempts) && (
                           <div className="text-[10px] text-muted-foreground mt-0.5">
-                            {Object.values((s as any).question_attempts).reduce((a: number, b) => a + Number(b), 0)} attempts
+                            {(Object.values((s as any).question_attempts) as number[]).reduce((a, b) => a + Number(b), 0)} attempts
                           </div>
                         )}
                       </div>
