@@ -133,7 +133,7 @@ const Quiz = () => {
     };
 
     return (
-      <div className="h-screen flex flex-col overflow-hidden pt-16 bg-muted/20">
+      <div className="h-screen flex flex-col overflow-hidden pt-16 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
         {loading && <LoadingScreen onDone={() => { setLoading(false); setScreen("intro"); }} duration={1500} />}
         
         <div className="flex-1 flex flex-col px-6 py-8 overflow-hidden">
@@ -339,11 +339,12 @@ const Quiz = () => {
 
       <div className="flex-1 flex overflow-hidden">
         <div className="hidden md:block md:w-1/2 border-r border-exam-divider overflow-hidden">
-          <StimulusPanel 
-            unit={selectedUnit as 1 | 2 | 3 | 4 | 5 | 6 | 7} 
-            imageUrl={(meta as any).imageUrl}
-            videoUrl={(meta as any).videoUrl}
-          />
+          <StimulusPanel
+                    unit={selectedUnit as 1 | 2 | 3 | 4 | 5 | 6 | 7}
+                    imageUrl={(meta as any).imageUrl}
+                    images={(meta as any).imageUrls}
+                    videoUrl={(meta as any).videoUrl}
+                  />
         </div>
         <div className="w-full md:w-1/2 overflow-hidden">
           <QuestionPanel

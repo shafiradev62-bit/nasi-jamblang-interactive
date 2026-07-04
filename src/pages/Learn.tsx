@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getUnitMeta } from "@/data/appContent";
 
 const Learn = () => {
   const { lang } = useLanguage();
   const navigate = useNavigate();
   const isId = lang === "id";
   const [selectedUnit, setSelectedUnit] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
+  const meta = getUnitMeta(selectedUnit);
 
   const unitLabels: Record<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10, string> = {
     1: isId ? "Unit 1: Nasi Jamblang" : "Unit 1: Nasi Jamblang",
@@ -67,13 +69,13 @@ const Learn = () => {
               </div>
               
               {/* UNIT MEDIA SLOT */}
-              <div className="relative group rounded-2xl overflow-hidden border border-border/40 bg-muted/30 aspect-video flex items-center justify-center my-6 shadow-sm transition-all hover:border-primary/30">
-                <div className="text-center p-6">
-                  <div className="w-12 h-12 rounded-full border-2 border-dashed border-muted-foreground/30 flex items-center justify-center mx-auto mb-3 text-muted-foreground/40">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                  </div>
-                  <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">{isId ? "Slot Foto / Video Unit 1" : "Unit 1 Photo / Video Slot"}</p>
-                  <p className="text-[10px] text-muted-foreground/60 mt-1">{isId ? "Komponen visual akan ditampilkan di sini" : "Visual components will be displayed here"}</p>
+              <div className="my-6 space-y-3">
+                <div className="grid grid-cols-3 gap-3">
+                  {(meta.imageUrls || [meta.imageUrl]).filter(Boolean).map((url, i) => (
+                    <div key={i} className="relative group rounded-xl overflow-hidden border border-border/40 aspect-square shadow-sm transition-all hover:border-primary/30">
+                      <img src={url} alt={`Unit 1 image ${i+1}`} className="w-full h-full object-cover" />
+                    </div>
+                  ))}
                 </div>
               </div>
 

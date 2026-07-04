@@ -32,6 +32,7 @@ export interface UnitMeta {
   themeEn: string;
   themeId: string;
   imageUrl?: string;
+  imageUrls?: string[];
   videoUrl?: string;
 }
 
@@ -43,6 +44,7 @@ export const defaultUnitMeta: Record<number, UnitMeta> = {
     themeEn: "Nasi Jamblang traditionally uses teak leaves as natural food packaging. Teak leaves are biodegradable and decompose naturally in the environment, reducing plastic waste. This practice reflects sustainable packaging based on natural resources and illustrates how traditional practices support environmentally friendly consumption and waste reduction within ecosystems.",
     themeId: "Nasi Jamblang secara tradisional menggunakan daun jati sebagai pembungkus makanan alami. Daun jati bersifat biodegradable dan terurai secara alami di lingkungan, sehingga mengurangi limbah plastik. Praktik ini mencerminkan kemasan berkelanjutan berbasis sumber daya alam serta menunjukkan bagaimana praktik tradisional mendukung konsumsi ramah lingkungan dan pengurangan limbah dalam ekosistem.",
     imageUrl: "/images/unit1.png",
+    imageUrls: ["/images/unit1.png", "/images/unit1b.png", "/images/unit1.png"],
     videoUrl: v1.url,
   },
   2: {

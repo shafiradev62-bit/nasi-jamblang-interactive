@@ -19,7 +19,7 @@ const StimulusPanel = ({ unit = 2, imageUrl, videoUrl, images = [], videos = [] 
   const isDynamic = dynamicStimulus && (dynamicStimulus.titleEn || dynamicStimulus.introductionEn);
 
   // Combine old and new media props
-  const allImages = [imageUrl, ...images].filter(Boolean) as string[];
+  const allImages = [...(images || []), imageUrl].filter(Boolean) as string[];
   const allVideos = [videoUrl, ...videos].filter(Boolean) as string[];
   const hasMedia = allImages.length > 0 || allVideos.length > 0;
 

@@ -69,13 +69,13 @@ export default function LoadingScreen({ onDone, duration = 30000 }: LoadingScree
   }, [duration]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* Green accent top bar */}
       <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary" />
 
       <div className="flex flex-col items-center gap-6 select-none">
         {/* Speech bubble */}
-        <div className="relative bg-white border border-border/60 rounded-2xl px-5 py-3 shadow-sm max-w-xs text-center">
+        <div className="relative bg-white border border-border/60 rounded-2xl px-5 py-3 shadow-sm max-w-xs text-center animate-pulse">
           <p className="text-[14px] text-foreground font-medium leading-snug">
             {bubbles[bubbleIdx]}
           </p>
@@ -83,12 +83,13 @@ export default function LoadingScreen({ onDone, duration = 30000 }: LoadingScree
           <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r border-b border-border/60 rotate-45" />
         </div>
 
-        {/* Sprite */}
+        {/* Sprite with animation */}
         <img
           src={SPRITES[spriteIdx]}
           alt="character"
-          className="w-28 h-28 object-contain"
+          className="w-28 h-28 object-contain animate-bounce"
           draggable={false}
+          style={{ animationDuration: "2s" }}
         />
 
         {/* Dots loader */}

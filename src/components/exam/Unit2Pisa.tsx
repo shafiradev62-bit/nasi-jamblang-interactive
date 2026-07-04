@@ -372,15 +372,21 @@ const Unit2Pisa = ({ onExit }: Unit2PisaProps) => {
             </div>
 
             {/* ── JAR VISUALISATION ── */}
-            <div className="bg-white rounded-2xl border border-border/50 shadow-sm p-5">
+            <div className="bg-white rounded-2xl border border-border/50 shadow-sm p-5 transition-transform hover:scale-[1.02] cursor-pointer">
               <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-3 text-center">{isId ? "Visualisasi dalam Wadah" : "Inside the Jar"}</p>
               <div className="flex gap-5 items-center">
                 <svg viewBox="0 0 200 260" className="h-56 shrink-0" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <linearGradient id="terasiPaste" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#7c4a2d" />
-                      <stop offset="100%" stopColor="#5a3320" />
-                    </linearGradient>
+                  <linearGradient id="terasiPaste" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#6b3f29" />
+                    <stop offset="30%" stopColor="#8a5636" />
+                    <stop offset="60%" stopColor="#7c4a2d" />
+                    <stop offset="100%" stopColor="#4a2a1a" />
+                  </linearGradient>
+                  <filter id="terasiTexture" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+                  </filter>
                     <linearGradient id="jarGlass" x1="0" y1="0" x2="1" y2="0">
                       <stop offset="0%" stopColor="#ffffff" stopOpacity="0.55" />
                       <stop offset="50%" stopColor="#ffffff" stopOpacity="0.05" />
@@ -418,7 +424,12 @@ const Unit2Pisa = ({ onExit }: Unit2PisaProps) => {
                     <path d="M56 70 L144 70 L144 234 Q144 242 136 242 L64 242 Q56 242 56 234 Z" />
                   </clipPath>
                   <g clipPath="url(#jarClip)">
-                    <rect x="56" y="70" width="88" height="176" fill="url(#terasiPaste)" />
+                    <rect x="56" y="70" width="88" height="176" fill="url(#terasiPaste)" filter="url(#terasiTexture)" />
+                  
+                  {/* Add some texture blobs */}
+                  <ellipse cx="75" cy="100" rx="8" ry="12" fill="#5a3320" opacity="0.5" />
+                  <ellipse cx="120" cy="130" rx="10" ry="8" fill="#6b3f29" opacity="0.4" />
+                  <ellipse cx="90" cy="180" rx="12" ry="10" fill="#4a2a1a" opacity="0.5" />
                     {/* paste top surface */}
                     <ellipse cx="100" cy="72" rx="44" ry="6" fill="#8a5636" />
                     <ellipse cx="100" cy="74" rx={40 - moistureCount} ry="4" fill="#9a6542" opacity="0.75">
