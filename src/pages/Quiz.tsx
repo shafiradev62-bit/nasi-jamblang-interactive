@@ -285,7 +285,6 @@ const Quiz = () => {
         </div>
       </div>
     );
-    );
   }
 
   // ── EXAM SCREEN ──
